@@ -20,14 +20,15 @@
 
 .app-button {
     font-size: 16px;
-	padding: 10px 20px;
+	padding: 0px 20px;
 	border-radius: 10px;
-    margin-bottom: 30px
+    margin-bottom: 50px;
 }
 
 .app-button:hover {
 	background: orange;
 	cursor: pointer;
+    float: left;
 }
 
 .app-output {
@@ -38,3 +39,6 @@
 	background: lightyellow;
 }
 
+.app-textarea {
+    font-size: 24px;
+}

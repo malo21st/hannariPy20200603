@@ -1,0 +1,45 @@
+.app-header {
+    height: 40px;
+    line-height: 30px;
+    border-bottom: thin lightblue solid;
+    padding-left: 20px;
+}
+
+.app-header .app-header--title {
+    font-size: 32px;
+}
+
+.app-usage {
+    font-size: 16px;
+    padding: 0px 10px;
+}
+
+.app-button-area {
+	padding: 10px 10px;
+}
+
+.app-button {
+    font-size: 16px;
+	padding: 10px 20px;
+	border-radius: 10px;
+    margin-left: 30px;
+}
+
+.app-button:hover {
+	background: lightblue; /*orange;*/
+	cursor: pointer;
+    float: left;
+}
+
+.app-output {
+	padding: 10px 50px;
+}
+
+.app-cytoscape {
+	background: lightyellow;
+}
+
+.app-textarea {
+    font-size: 24px;
+}
+
