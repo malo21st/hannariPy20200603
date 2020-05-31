@@ -48,21 +48,19 @@ acc = read_csv(csvLoc)
 AGE = ['1～21', '22～29', '30～39', '40～49', '50～59', '60～69', '70～74',
        '75～', '不明']
 
-# Set up the Dash instance. Big thanks to @jimmybow for the boilerplate code
-server = flask.Flask(__name__)
-server.secret_key = os.environ.get('secret_key', 'secret')
+# # Set up the Dash instance. Big thanks to @jimmybow for the boilerplate code
+# server = flask.Flask(__name__)
+# server.secret_key = os.environ.get('secret_key', 'secret')
 
-# Include the external CSS
-cssURL = ['https://rawgit.com/richard-muir/uk-car-accidents/master/road-safety.css',
-          'https://codepen.io/chriddyp/pen/bWLwgP.css'
-          ]
+# app = dash.Dash(__name__, server = server)
 
 ## SETTING UP THE APP LAYOUT ##
-# Main layout container
+# # Main layout container
+# app.layout = html.Div(
+
 layout = html.Div(
 style={'color': 'black', 'background-color': 'white'},
 children=[
-    html.Div(id='id_condition'),
     html.H1(
         '福岡県の交通事故',
         style={
@@ -74,13 +72,13 @@ children=[
 
         html.Div([
 
-            html.H4(
+            html.H2(
                 '''2017年福岡では {:,} 件の交通事故が発生、多くの方が死傷されました。'''.format(len(acc)),
                 style={
                     'fontFamily' : FONT_FAMILY
                 }
                 ),
-            html.H4(
+            html.H2(
                 '''どんな状況で交通事故が起きたか、条件を変えながら探求してみよう。''',
                 style={
                     'fontFamily' : FONT_FAMILY
@@ -254,30 +252,14 @@ children=[
 
 # Feeds the filter outputs into the mapbox
 @app.callback(
-    Output('id_condition', 'condition'),
-    [
-    Input('severityChecklist', 'value'),
-    Input('dayChecklist', 'value'),
-    Input('hourSlider', 'value'),
-    Input('ageChecklist', 'value'),
+    Output(component_id='map', component_property='figure'),
+    [Input(component_id='severityChecklist', component_property='value'),
+    Input(component_id='dayChecklist', component_property='value'),
+    Input(component_id='hourSlider', component_property='value'),
+    Input(component_id='ageChecklist', component_property='value'),
     ]
 )
-def set_condition(severity, weekdays, time, age):
-    result = {
-        'severity':severity, 
-        'weekdays':weekdays, 
-        'time':time, 
-        'age':age,
-    }
-    return result
-
-# This on updates the map.
-@app.callback(Output('map', 'figure'),[Input('id_condition', 'condition')])
-def updateMapBox(data):
-    severity = data['severity']
-    weekdays = data['weekdays']
-    time = data['time']
-    age = data['age']
+def updateMapBox(severity, weekdays, time, age):
     # List of hours again
     hours = [i for i in range(time[0], time[1]+1)]
     # Filter the dataframe
@@ -366,12 +348,15 @@ def updateMapBox(data):
     return fig
 
 # Pass in the values of the filters to the heatmap
-@app.callback(Output('heatmap', 'figure'),[Input('id_condition', 'condition')])
-def updateHeatmap(data):
-    severity = data['severity']
-    weekdays = data['weekdays']
-    time = data['time']
-    age = data['age']
+@app.callback(
+    Output(component_id='heatmap', component_property='figure'),
+    [Input(component_id='severityChecklist', component_property='value'),
+    Input(component_id='dayChecklist', component_property='value'),
+    Input(component_id='hourSlider', component_property='value'),
+    Input(component_id='ageChecklist', component_property='value'),
+    ]
+)
+def updateHeatmap(severity, weekdays, time, age):
     # The rangeslider is selects inclusively, but a python list stops before the last number in a range
     hours = [i for i in range(time[0], time[1] + 1)]
     # Take a copy of the dataframe, filtering it and grouping
@@ -453,12 +438,15 @@ def updateHeatmap(data):
     return fig
 
 # This on updates the bar.
-@app.callback(Output('bar', 'figure'),[Input('id_condition', 'condition')])
-def updateBarChart(data):
-    severity = data['severity']
-    weekdays = data['weekdays']
-    time = data['time']
-    age = data['age']
+@app.callback(
+    Output(component_id='bar', component_property='figure'),
+    [Input(component_id='severityChecklist', component_property='value'),
+    Input(component_id='dayChecklist', component_property='value'),
+    Input(component_id='hourSlider', component_property='value'),
+    Input(component_id='ageChecklist', component_property='value'),
+    ]
+)
+def updateBarChart(severity, weekdays, time, age):
     # The rangeslider is selects inclusively, but a python list stops before the last number in a range
     hours = [i for i in range(time[0], time[1]+1)]
 
@@ -517,9 +505,14 @@ def updateBarChart(data):
                   },
               'yaxis' : {
                   'type':'log'
-                  }
+              	  }
           }}
 
     # Returns the figure into the 'figure' component property, update the bar chart
     return fig
 
+
+# Run the Dash app
+if __name__ == '__main__':
+    app.run_server(debug=True)
+#    app.run_server(debug=False, threaded=True ,port=8050, host='192.168.11.37')

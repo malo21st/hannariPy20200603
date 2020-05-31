@@ -16,9 +16,9 @@ CODE = '''{
         'title': 'Dash Data Visualization'
     }
 }
-
-{'data':[]}
 '''
+
+# app.layout = html.Div(
 
 layout = html.Div(
     className="app-header",
@@ -33,13 +33,12 @@ layout = html.Div(
         html.Div(children=[
             html.Div([
                 html.Button('＜＝　プロパティの設定',
-                    className="app-button",
-                    id='id2_button_send', n_clicks=0,
+                    className="app-button", id='id2_button_send', n_clicks=0,
                 ),
                 dcc.Textarea(
                     className="app-textarea",
                     id='id2_output_value',
-                    style={'width':'100%', 'height': '340px'},
+                    style={'width':'100%', 'height': '340px', 'margin-top':'3px'},
                 ),
             ]),
         ], style={'display':'inline-block', 'width':'48%', 'float':'top'}),
@@ -61,12 +60,13 @@ layout = html.Div(
         html.Div(children=[
             html.Div([
                 html.Button('＝＞　プロパティの取得',
-                    className="app-button",
-                    id='id2_button_get', n_clicks=0,
+                    className="app-button", id='id2_button_get', n_clicks=0,
                 ),
                 dcc.Textarea(
                     className="app-textarea",
-                    style={'width':'100%', 'height': '335px'},
+                    style={'width':'100%', 'height': '335px', 'margin-top':'3px',
+                           'background-color': 'lightgray'
+                    },
                     value=CODE,
                 ),
             ]),
@@ -82,7 +82,7 @@ layout = html.Div(
 )
 def memory_children(n_clicks, figure):
     if not n_clicks:
-        return 'None'
+        return '{}'
     return repr(figure)
 
 
@@ -93,7 +93,7 @@ def memory_children(n_clicks, figure):
 )
 def update_output_object(n_clicks, value):
     if not n_clicks:
-        return {'data':[]}
+        return {}
     return eval(value)
 
 if __name__ == "__main__":

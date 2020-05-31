@@ -10,7 +10,7 @@ from collections import OrderedDict
 
 from app import app
 
-#app = dash.Dash(__name__)
+# app = dash.Dash(__name__)
 
 df_table = pd.DataFrame(OrderedDict([
     ('No',    ['01', '02', '03', '04', '05', '06', '07']),
@@ -19,8 +19,10 @@ df_table = pd.DataFrame(OrderedDict([
     ('Classes',[None, None, None, None, None, None, None]),
  ]))
 
-list_NODE = [c for c in "ABCDEFG"]
+list_NODE = [c for c in "ABCDEF"]
 list_CLASS = ['red', 'blue']
+
+# app.layout = html.Div(
 
 layout = html.Div(
     className="app-header",
@@ -29,6 +31,7 @@ layout = html.Div(
     html.Div([
         html.Div([
             cyto.Cytoscape(
+                className="app-cytoscape",
                 id='id4_output_object',
                 layout={'name': 'circle'},
                 elements=[],
@@ -37,7 +40,8 @@ layout = html.Div(
                     {
                         'selector': 'node',
                         'style': {
-                            'content': 'data(label)'
+                            'content': 'data(label)',
+                            'font-size': '30vh',
                         }
                     },
                     {
@@ -66,6 +70,14 @@ layout = html.Div(
                         }
                     },
                     {
+                        'selector': '.black',
+                        'style': {
+                            'background-color': 'black',
+                            'line-color': 'black',
+                            'target-arrow-color': 'black',
+                        }
+                    },
+                    {
                         'selector': '.triangle',
                         'style': {
                             'shape': 'triangle'
@@ -77,7 +89,7 @@ layout = html.Div(
                             'shape': 'rectangle'
                         }
                     }
-                ], style={'width':'100%', 'height':'380px'}),
+                ], style={'width':'95%', 'height':'380px'}),
         ], style={'display':'inline-block', 'width':'45%'}),
         html.Div([
             html.Div([
@@ -88,7 +100,7 @@ layout = html.Div(
                 dcc.Textarea(
                     className="app-textarea",
                     id='id4_output_value',
-                    style={'width':'100%', 'height': '335px'},
+                    style={'width':'100%', 'height': '335px', 'margin-top':'3px'},
                 ),
                 html.Button('↑↑↑　データ変換　↑↑↑',
                     className="app-button", 
@@ -120,6 +132,7 @@ layout = html.Div(
                     {'width':'80px'},
                     {'if':{'column_id':'No'}, 'width':'30px'},
                     {'textAlign':'center'},
+                    {'fontSize':20},
                 ],
                 style_data_conditional=[
                     {
@@ -139,7 +152,7 @@ layout = html.Div(
                     {
                         'if':{
                             'filter_query':'{Classes}="red"',
-                            'column_id':'Source',
+                            'column_id':'Target',
                         },
                         'backgroundColor':'#FF4136',
                     },
@@ -163,7 +176,7 @@ layout = html.Div(
                 dcc.Textarea(
                     className="app-textarea",
                     id='id4_input_value',
-                    style={'width':'100%', 'height': '250px'},
+                    style={'width':'100%', 'height': '250px', 'margin-top':'3px'},
                     value="[]",
                 ),
             ]),
@@ -198,8 +211,7 @@ def update_input_value(n_clicks, data):
 def trans_output_value(n_clicks, value):
     if not n_clicks:
         return "[]"
-    cyto_data = trans_data(value)
-    return cyto_data
+    return trans_data(value)
 
 
 @app.callback(
@@ -234,13 +246,13 @@ def trans_data(data):
     ##　ノードの編集
     for node in sr_ST:
         dic_node = {'data': {'id': None, 'label': None}, 
-                    'classes': '_'
+                    'classes': None
                     }
         dic_node['data']['id'] = node
         dic_node['data']['label'] = node
 
         try:
-            if node in list(df['Source'][df['Classes']=='red']):
+            if node in list(df['Target'][df['Classes']=='red']):
                 dic_node['classes'] = 'red'
             elif node in list(df['Source'][df['Classes']=='blue']):
                 dic_node['classes'] = 'blue'
@@ -250,11 +262,10 @@ def trans_data(data):
     ##　エッジの編集
     for edge in df_ST.iterrows():
         dic_edge = {'data': {'source': None, 'target': None},
-                    'classes': '_',
+                    'classes': None,
                     }
         dic_edge['data']['source'] = edge[1][0]
         dic_edge['data']['target'] = edge[1][1]
-        dic_edge['classes'] = df['Classes'][df['Source']==edge[1][0]].values[0]
         elements.append(dic_edge)
 
     ##　改行を入れて再編集
