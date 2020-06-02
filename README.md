@@ -7,16 +7,15 @@
 
 ## ファイルとフォルダの説明
 - Dashで作成したアプリの紹介・解説.pdf：説明資料
-- index.py
-- app.py
-* apps：フォルダ
-
-  - app0.py：
-  - app1.py：
-  - app2.py：
-  - app3.py：
-  - app4.py：
-  - h29.csv：
-  - my_style.py：
-  - table_to_cyto.py：
-* single_page：
+- index.py：ターミナルから python index.py で起動。control + c で停止。
+- app.py：Dashのappインスタンスを生成
+* apps：index.pyを実行すると、app0.py〜app4.pyをタブで選べます。
+  - app0.py：福岡県の交通事故のダッシュボード
+  - app1.py：最短経路のＳＰＡ（Single Page Application）
+  - app2.py：【実験】グラフのFigureのコールバック
+  - app3.py：【実験】Cytoscapeのelementsプロパティ
+  - app4.py：【実験】DataTableとCytoscapeの連携
+  - h29.csv：app0.pyで使用する交通事故データ
+  - my_style.py：app.1.pyで使用する書式データ
+  - table_to_cyto.py：app1.pyで使用するデータ変換の関数
+* single_page：単体で起動するapp0.py〜app4.pyを収めたフォルダ
