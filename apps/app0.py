@@ -5,10 +5,10 @@
 # https://traffic-accidents-uk.herokuapp.com
 # https://github.com/richard-muir/uk-car-accidents
 
-import os
+# import os
 
 import dash
-import flask
+# import flask
 
 from dash.dependencies import Input, Output
 import dash_core_components as dcc
