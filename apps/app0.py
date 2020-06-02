@@ -72,13 +72,13 @@ children=[
 
         html.Div([
 
-            html.H2(
+            html.H3(
                 '''2017年福岡では {:,} 件の交通事故が発生、多くの方が死傷されました。'''.format(len(acc)),
                 style={
                     'fontFamily' : FONT_FAMILY
                 }
                 ),
-            html.H2(
+            html.H3(
                 '''どんな状況で交通事故が起きたか、条件を変えながら探求してみよう。''',
                 style={
                     'fontFamily' : FONT_FAMILY
