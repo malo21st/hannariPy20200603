@@ -9,7 +9,7 @@ from apps import app0, app1, app2, app3, app4
 app.layout = html.Div([
     dcc.Tabs(id="tabs", value='tab-0', children=[
         dcc.Tab(label='インタラクティブ・ダッシュボード', value='tab-0'),
-        dcc.Tab(label='クリティカルパス', value='tab-1'),
+        dcc.Tab(label='最短経路問題を解いてみよう', value='tab-1'),
         dcc.Tab(label='コールバックの実験【Graph】', value='tab-2'),
         dcc.Tab(label='コールバックの実験【Cytoscape】', value='tab-3'),
         dcc.Tab(label='コールバックの実験【連携編】', value='tab-4'),
