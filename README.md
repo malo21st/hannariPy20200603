@@ -7,6 +7,7 @@
 
 ## ファイルとフォルダの説明
 - Dashで作成したアプリの紹介・解説.pdf：説明資料
+
 - index.py：ターミナルから python index.py で起動。control + c で停止。
 - app.py：Dashのappインスタンスを生成
 * apps：index.pyを実行すると、app0.py〜app4.pyをタブで選べます。
