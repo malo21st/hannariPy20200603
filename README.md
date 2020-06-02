@@ -19,4 +19,5 @@
   - h29.csv：app0.pyで使用する交通事故データ
   - my_style.py：app.1.pyで使用する書式データ
   - table_to_cyto.py：app1.pyで使用するデータ変換の関数
+  
 * single_page：単体で起動するapp0.py〜app4.pyを収めたフォルダ
