@@ -1,5 +1,5 @@
 ## hannariPy20200603
-# Dash Hands On #6 / Dashの復讐と実践例
+# Dash Hands On #6 / Dashの復習と実践例
 
 - 2020/06/03(水) 21:00 〜 23:00
 - オンライン
